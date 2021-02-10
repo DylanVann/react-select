@@ -1,7 +1,8 @@
 // @flow
-/** @jsx jsx */
-import { type Node } from 'react';
-import { jsx, ClassNames } from '@emotion/react';
+import React, { type Node } from 'react';
+import { tw } from 'twind';
+import classNames from 'classnames';
+
 import { CrossIcon } from './indicators';
 import type { CommonProps } from '../types';
 
@@ -25,9 +26,9 @@ export const multiValueCSS = ({
 }: MultiValueProps) => ({
   label: 'multiValue',
   backgroundColor: colors.neutral10,
-  borderRadius: borderRadius / 2,
+  borderRadius: `calc(${borderRadius} / 2)`,
   display: 'flex',
-  margin: spacing.baseUnit / 2,
+  margin: `calc(${spacing.baseUnit} / 2)`,
   minWidth: 0, // resolves flex/text-overflow bug
 });
 
@@ -35,7 +36,7 @@ export const multiValueLabelCSS = ({
   theme: { borderRadius, colors },
   cropWithEllipsis,
 }: MultiValueProps) => ({
-  borderRadius: borderRadius / 2,
+  borderRadius: `calc(${borderRadius} / 2)`,
   color: colors.neutral80,
   fontSize: '85%',
   overflow: 'hidden',
@@ -50,12 +51,12 @@ export const multiValueRemoveCSS = ({
   isFocused,
 }: MultiValueProps) => ({
   alignItems: 'center',
-  borderRadius: borderRadius / 2,
+  borderRadius: `calc(${borderRadius} / 2)`,
   backgroundColor: isFocused && colors.dangerLight,
   display: 'flex',
   paddingLeft: spacing.baseUnit,
   paddingRight: spacing.baseUnit,
-  ':hover': {
+  '&:hover': {
     backgroundColor: colors.dangerLight,
     color: colors.danger,
   },
@@ -109,61 +110,57 @@ const MultiValue = (props: MultiValueProps) => {
   const { Container, Label, Remove } = components;
 
   return (
-    <ClassNames>
-      {({ css, cx: emotionCx }) => (
-        <Container
-          data={data}
-          innerProps={{
-            className: emotionCx(
-              css(getStyles('multiValue', props)),
-              cx(
-                {
-                  'multi-value': true,
-                  'multi-value--is-disabled': isDisabled,
-                },
-                className
-              )
-            ),
-            ...innerProps,
-          }}
-          selectProps={selectProps}
-        >
-          <Label
-            data={data}
-            innerProps={{
-              className: emotionCx(
-                css(getStyles('multiValueLabel', props)),
-                cx(
-                  {
-                    'multi-value__label': true,
-                  },
-                  className
-                )
-              ),
-            }}
-            selectProps={selectProps}
-          >
-            {children}
-          </Label>
-          <Remove
-            data={data}
-            innerProps={{
-              className: emotionCx(
-                css(getStyles('multiValueRemove', props)),
-                cx(
-                  {
-                    'multi-value__remove': true,
-                  },
-                  className
-                )
-              ),
-              ...removeProps,
-            }}
-            selectProps={selectProps}
-          />
-        </Container>
-      )}
-    </ClassNames>
+    <Container
+      data={data}
+      innerProps={{
+        className: classNames(
+          tw`${() => getStyles('multiValue', props)}`,
+          cx(
+            {
+              'multi-value': true,
+              'multi-value--is-disabled': isDisabled,
+            },
+            className
+          )
+        ),
+        ...innerProps,
+      }}
+      selectProps={selectProps}
+    >
+      <Label
+        data={data}
+        innerProps={{
+          className: classNames(
+            tw`${() => getStyles('multiValueLabel', props)}`,
+            cx(
+              {
+                'multi-value__label': true,
+              },
+              className
+            )
+          ),
+        }}
+        selectProps={selectProps}
+      >
+        {children}
+      </Label>
+      <Remove
+        data={data}
+        innerProps={{
+          className: classNames(
+            tw`${() => getStyles('multiValueRemove', props)}`,
+            cx(
+              {
+                'multi-value__remove': true,
+              },
+              className
+            )
+          ),
+          ...removeProps,
+        }}
+        selectProps={selectProps}
+      />
+    </Container>
   );
 };
 

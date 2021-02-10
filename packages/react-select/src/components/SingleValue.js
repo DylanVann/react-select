@@ -1,7 +1,8 @@
 // @flow
-/** @jsx jsx */
+import React from 'react';
+import { tw } from 'twind';
+
 import type { CommonProps } from '../types';
-import { jsx } from '@emotion/react';
 
 type State = {
   /** Whether this is disabled. */
@@ -23,9 +24,9 @@ export const css = ({
 }: SingleValueProps) => ({
   label: 'singleValue',
   color: isDisabled ? colors.neutral40 : colors.neutral80,
-  marginLeft: spacing.baseUnit / 2,
-  marginRight: spacing.baseUnit / 2,
-  maxWidth: `calc(100% - ${spacing.baseUnit * 2}px)`,
+  marginLeft: `calc(${spacing.baseUnit} / 2)`,
+  marginRight: `calc(${spacing.baseUnit} / 2)`,
+  maxWidth: `calc(100% - ${spacing.baseUnit} * 2)`,
   overflow: 'hidden',
   position: 'absolute',
   textOverflow: 'ellipsis',
@@ -38,12 +39,12 @@ const SingleValue = (props: SingleValueProps) => {
   const { children, className, cx, getStyles, isDisabled, innerProps } = props;
   return (
     <div
-      css={getStyles('singleValue', props)}
       className={cx(
         {
           'single-value': true,
           'single-value--is-disabled': isDisabled,
         },
+        tw`${() => getStyles('singleValue', props)}`,
         className
       )}
       {...innerProps}

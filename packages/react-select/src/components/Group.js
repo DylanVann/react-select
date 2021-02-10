@@ -1,7 +1,6 @@
 // @flow
-/** @jsx jsx */
-import { type Node, type ComponentType } from 'react';
-import { jsx } from '@emotion/react';
+import React, { type Node, type ComponentType } from 'react';
+import { tw } from 'twind';
 
 import type { CommonProps } from '../types';
 
@@ -20,8 +19,8 @@ type ComponentProps = {
 export type GroupProps = CommonProps & ComponentProps;
 
 export const groupCSS = ({ theme: { spacing } }: GroupProps) => ({
-  paddingBottom: spacing.baseUnit * 2,
-  paddingTop: spacing.baseUnit * 2,
+  paddingBottom: `calc(${spacing.baseUnit} * 2)`,
+  paddingTop: `calc(${spacing.baseUnit} * 2)`,
 });
 
 const Group = (props: GroupProps) => {
@@ -39,8 +38,11 @@ const Group = (props: GroupProps) => {
   } = props;
   return (
     <div
-      css={getStyles('group', props)}
-      className={cx({ group: true }, className)}
+      className={cx(
+        { group: true },
+        tw`${() => getStyles('group', props)}`,
+        className
+      )}
       {...innerProps}
     >
       <Heading
@@ -65,8 +67,8 @@ export const groupHeadingCSS = ({ theme: { spacing } }: GroupProps) => ({
   fontSize: '75%',
   fontWeight: '500',
   marginBottom: '0.25em',
-  paddingLeft: spacing.baseUnit * 3,
-  paddingRight: spacing.baseUnit * 3,
+  paddingLeft: `calc(${spacing.baseUnit} * 3)`,
+  paddingRight: `calc(${spacing.baseUnit} * 3)`,
   textTransform: 'uppercase',
 });
 
@@ -74,8 +76,11 @@ export const GroupHeading = (props: any) => {
   const { className, cx, getStyles, theme, selectProps, ...cleanProps } = props;
   return (
     <div
-      css={getStyles('groupHeading', { theme, ...cleanProps })}
-      className={cx({ 'group-heading': true }, className)}
+      className={cx(
+        { 'group-heading': true },
+        tw`${() => getStyles('groupHeading', { theme, ...cleanProps })}`,
+        className
+      )}
       {...cleanProps}
     />
   );

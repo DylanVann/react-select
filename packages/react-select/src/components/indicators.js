@@ -1,7 +1,6 @@
 // @flow
-/** @jsx jsx */
-import { type Node } from 'react';
-import { jsx, keyframes } from '@emotion/react';
+import React, { type Node } from 'react';
+import { tw, keyframes } from 'twind/css';
 
 import type { CommonProps, Theme } from '../types';
 
@@ -16,13 +15,13 @@ const Svg = ({ size, ...props }: { size: number }) => (
     viewBox="0 0 20 20"
     aria-hidden="true"
     focusable="false"
-    css={{
+    className={tw`${() => ({
       display: 'inline-block',
       fill: 'currentColor',
       lineHeight: 1,
       stroke: 'currentColor',
       strokeWidth: 0,
-    }}
+    })}`}
     {...props}
   />
 );
@@ -63,10 +62,10 @@ const baseCSS = ({
   label: 'indicatorContainer',
   color: isFocused ? colors.neutral60 : colors.neutral20,
   display: 'flex',
-  padding: baseUnit * 2,
+  padding: `calc(${baseUnit} * 2)`,
   transition: 'color 150ms',
 
-  ':hover': {
+  '&:hover': {
     color: isFocused ? colors.neutral80 : colors.neutral40,
   },
 });
@@ -76,12 +75,12 @@ export const DropdownIndicator = (props: IndicatorProps) => {
   const { children, className, cx, getStyles, innerProps } = props;
   return (
     <div
-      css={getStyles('dropdownIndicator', props)}
       className={cx(
         {
           indicator: true,
           'dropdown-indicator': true,
         },
+        tw`${() => getStyles('dropdownIndicator', props)}`,
         className
       )}
       {...innerProps}
@@ -127,8 +126,8 @@ export const indicatorSeparatorCSS = ({
   label: 'indicatorSeparator',
   alignSelf: 'stretch',
   backgroundColor: isDisabled ? colors.neutral10 : colors.neutral20,
-  marginBottom: baseUnit * 2,
-  marginTop: baseUnit * 2,
+  marginBottom: `calc(${baseUnit} * 2)`,
+  marginTop: `calc(${baseUnit} * 2)`,
   width: 1,
 });
 
@@ -167,7 +166,7 @@ export const loadingIndicatorCSS = ({
   label: 'loadingIndicator',
   color: isFocused ? colors.neutral60 : colors.neutral20,
   display: 'flex',
-  padding: baseUnit * 2,
+  padding: `calc(${baseUnit} * 2)`,
   transition: 'color 150ms',
   alignSelf: 'center',
   fontSize: size,
@@ -178,20 +177,24 @@ export const loadingIndicatorCSS = ({
 });
 
 type DotProps = { delay: number, offset: boolean };
-const LoadingDot = ({ delay, offset }: DotProps) => (
-  <span
-    css={{
-      animation: `${loadingDotAnimations} 1s ease-in-out ${delay}ms infinite;`,
-      backgroundColor: 'currentColor',
-      borderRadius: '1em',
-      display: 'inline-block',
-      marginLeft: offset ? '1em' : null,
-      height: '1em',
-      verticalAlign: 'top',
-      width: '1em',
-    }}
-  />
-);
+const LoadingDot = ({ delay, offset }: DotProps) => {
+  const animation = `1s ease-in-out ${delay}ms infinite;`;
+  return (
+    <span
+      className={tw`${() => ({
+        animationName: loadingDotAnimations,
+        animation: animation,
+        backgroundColor: 'currentColor',
+        borderRadius: '1em',
+        display: 'inline-block',
+        marginLeft: offset ? '1em' : null,
+        height: '1em',
+        verticalAlign: 'top',
+        width: '1em',
+      })}`}
+    />
+  );
+};
 
 export type LoadingIconProps = {
   /** Props that will be passed on to the children. */

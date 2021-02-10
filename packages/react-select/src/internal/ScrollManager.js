@@ -1,9 +1,8 @@
 // @flow
-/** @jsx jsx */
-import { jsx } from '@emotion/react';
 import React, { type Element } from 'react';
 import useScrollCapture from './useScrollCapture';
 import useScrollLock from './useScrollLock';
+import { tw, css } from 'twind/css';
 
 type RefCallback<T> = (T | null) => void;
 
@@ -16,6 +15,8 @@ type Props = {
   onTopArrive?: (event: SyntheticEvent<HTMLElement>) => void,
   onTopLeave?: (event: SyntheticEvent<HTMLElement>) => void,
 };
+
+const styles = css({ position: 'fixed', left: 0, bottom: 0, right: 0, top: 0 });
 
 const blurSelectInput = () =>
   document.activeElement && document.activeElement.blur();
@@ -45,12 +46,7 @@ export default function ScrollManager({
 
   return (
     <React.Fragment>
-      {lockEnabled && (
-        <div
-          onClick={blurSelectInput}
-          css={{ position: 'fixed', left: 0, bottom: 0, right: 0, top: 0 }}
-        />
-      )}
+      {lockEnabled && <div onClick={blurSelectInput} className={tw(styles)} />}
       {children(targetRef)}
     </React.Fragment>
   );

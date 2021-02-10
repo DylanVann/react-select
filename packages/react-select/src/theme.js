@@ -24,13 +24,13 @@ export const colors = {
   neutral90: 'hsl(0, 0%, 10%)',
 };
 
-const borderRadius = 4;
+const borderRadius = '4px';
 // Used to calculate consistent margin/padding on elements
-const baseUnit = 4;
+const baseUnit = '4px';
 // The minimum height of the control
-const controlHeight = 38;
+const controlHeight = '38px';
 // The amount of space between the control and menu */
-const menuGutter = baseUnit * 2;
+const menuGutter = `calc(${baseUnit} * 2)`;
 
 export const spacing = {
   baseUnit,

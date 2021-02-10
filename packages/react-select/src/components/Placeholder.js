@@ -1,7 +1,7 @@
 // @flow
-/** @jsx jsx */
-import { type Node } from 'react';
-import { jsx } from '@emotion/react';
+import React, { type Node } from 'react';
+import { tw } from 'twind';
+
 import type { CommonProps } from '../types';
 
 export type PlaceholderProps = CommonProps & {
@@ -16,8 +16,8 @@ export const placeholderCSS = ({
 }: PlaceholderProps) => ({
   label: 'placeholder',
   color: colors.neutral50,
-  marginLeft: spacing.baseUnit / 2,
-  marginRight: spacing.baseUnit / 2,
+  marginLeft: `calc(${spacing.baseUnit} / 2)`,
+  marginRight: `calc(${spacing.baseUnit} / 2)`,
   position: 'absolute',
   top: '50%',
   transform: 'translateY(-50%)',
@@ -27,11 +27,11 @@ const Placeholder = (props: PlaceholderProps) => {
   const { children, className, cx, getStyles, innerProps } = props;
   return (
     <div
-      css={getStyles('placeholder', props)}
       className={cx(
         {
           placeholder: true,
         },
+        tw`${() => getStyles('placeholder', props)}`,
         className
       )}
       {...innerProps}

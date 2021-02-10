@@ -1,7 +1,7 @@
 // @flow
-/** @jsx jsx */
-import { type Node } from 'react';
-import { jsx } from '@emotion/react';
+import React, { type Node } from 'react';
+import { tw } from 'twind';
+
 import type { CommonProps, KeyboardEventHandler } from '../types';
 
 // ==============================
@@ -40,12 +40,12 @@ export const SelectContainer = (props: ContainerProps) => {
   } = props;
   return (
     <div
-      css={getStyles('container', props)}
       className={cx(
         {
           '--is-disabled': isDisabled,
           '--is-rtl': isRtl,
         },
+        tw`${() => getStyles('container', props)}`,
         className
       )}
       {...innerProps}
@@ -76,7 +76,7 @@ export const valueContainerCSS = ({
   display: 'flex',
   flex: 1,
   flexWrap: 'wrap',
-  padding: `${spacing.baseUnit / 2}px ${spacing.baseUnit * 2}px`,
+  padding: `calc(${spacing.baseUnit} / 2) calc(${spacing.baseUnit} * 2)`,
   WebkitOverflowScrolling: 'touch',
   position: 'relative',
   overflow: 'hidden',
@@ -94,13 +94,13 @@ export const ValueContainer = (props: ValueContainerProps) => {
 
   return (
     <div
-      css={getStyles('valueContainer', props)}
       className={cx(
         {
           'value-container': true,
           'value-container--is-multi': isMulti,
           'value-container--has-value': hasValue,
         },
+        tw`${() => getStyles('valueContainer', props)}`,
         className
       )}
       {...innerProps}
@@ -138,11 +138,11 @@ export const IndicatorsContainer = (props: IndicatorContainerProps) => {
 
   return (
     <div
-      css={getStyles('indicatorsContainer', props)}
       className={cx(
         {
           indicators: true,
         },
+        tw`${() => getStyles('indicatorsContainer', props)}`,
         className
       )}
       {...innerProps}

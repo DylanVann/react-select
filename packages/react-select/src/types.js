@@ -27,9 +27,9 @@ export type PropsWithInnerRef = {
 };
 
 type ThemeSpacing = {
-  baseUnit: number,
-  controlHeight: number,
-  menuGutter: number,
+  baseUnit: string,
+  controlHeight: string,
+  menuGutter: string,
 };
 
 export type Theme = {

@@ -1,12 +1,13 @@
 // @flow
-/** @jsx jsx */
+import React from 'react';
+import { tw } from 'twind';
+
 import { type ElementConfig } from 'react';
-import { jsx } from '@emotion/react';
 
 // Assistive text to describe visual elements. Hidden for sighted users.
 const A11yText = (props: ElementConfig<'span'>) => (
   <span
-    css={{
+    className={tw`${() => ({
       label: 'a11yText',
       zIndex: 9999,
       border: 0,
@@ -17,7 +18,7 @@ const A11yText = (props: ElementConfig<'span'>) => (
       overflow: 'hidden',
       padding: 0,
       whiteSpace: 'nowrap',
-    }}
+    })}`}
     {...props}
   />
 );

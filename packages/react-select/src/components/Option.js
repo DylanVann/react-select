@@ -1,7 +1,6 @@
 // @flow
-/** @jsx jsx */
-import { type Node } from 'react';
-import { jsx } from '@emotion/react';
+import React, { type Node } from 'react';
+import { tw } from 'twind';
 
 import type { CommonProps, PropsWithStyles, InnerRef } from '../types';
 
@@ -58,7 +57,7 @@ export const optionCSS = ({
   cursor: 'default',
   display: 'block',
   fontSize: 'inherit',
-  padding: `${spacing.baseUnit * 2}px ${spacing.baseUnit * 3}px`,
+  padding: `calc(${spacing.baseUnit} * 2) calc(${spacing.baseUnit} * 3)`,
   width: '100%',
   userSelect: 'none',
   WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
@@ -84,7 +83,6 @@ const Option = (props: OptionProps) => {
   } = props;
   return (
     <div
-      css={getStyles('option', props)}
       className={cx(
         {
           option: true,
@@ -92,6 +90,7 @@ const Option = (props: OptionProps) => {
           'option--is-focused': isFocused,
           'option--is-selected': isSelected,
         },
+        tw`${() => getStyles('option', props)}`,
         className
       )}
       ref={innerRef}

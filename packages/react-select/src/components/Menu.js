@@ -1,14 +1,13 @@
 // @flow
-/** @jsx jsx */
-import {
+import React, {
   createContext,
   Component,
   type Element as ReactElement,
   type ElementRef,
   type Node,
 } from 'react';
-import { jsx } from '@emotion/react';
 import { createPortal } from 'react-dom';
+import { tw } from 'twind';
 
 import {
   animatedScrollTo,
@@ -322,8 +321,11 @@ const Menu = (props: MenuProps) => {
 
   return (
     <div
-      css={getStyles('menu', props)}
-      className={cx({ menu: true }, className)}
+      className={cx(
+        { menu: true },
+        tw`${() => getStyles('menu', props)}`,
+        className
+      )}
       ref={innerRef}
       {...innerProps}
     >
@@ -381,12 +383,12 @@ export const MenuList = (props: MenuListComponentProps) => {
   } = props;
   return (
     <div
-      css={getStyles('menuList', props)}
       className={cx(
         {
           'menu-list': true,
           'menu-list--is-multi': isMulti,
         },
+        tw`${() => getStyles('menuList', props)}`,
         className
       )}
       ref={innerRef}
@@ -408,7 +410,7 @@ const noticeCSS = ({
   },
 }: NoticeProps) => ({
   color: colors.neutral40,
-  padding: `${baseUnit * 2}px ${baseUnit * 3}px`,
+  padding: `calc(${baseUnit} * 2) calc(${baseUnit} * 3)`,
   textAlign: 'center',
 });
 export const noOptionsMessageCSS = noticeCSS;
@@ -425,12 +427,12 @@ export const NoOptionsMessage = (props: NoticeProps) => {
   const { children, className, cx, getStyles, innerProps } = props;
   return (
     <div
-      css={getStyles('noOptionsMessage', props)}
       className={cx(
         {
           'menu-notice': true,
           'menu-notice--no-options': true,
         },
+        tw`${() => getStyles('noOptionsMessage', props)}`,
         className
       )}
       {...innerProps}
@@ -447,12 +449,12 @@ export const LoadingMessage = (props: NoticeProps) => {
   const { children, className, cx, getStyles, innerProps } = props;
   return (
     <div
-      css={getStyles('loadingMessage', props)}
       className={cx(
         {
           'menu-notice': true,
           'menu-notice--loading': true,
         },
+        tw`${() => getStyles('loadingMessage', props)}`,
         className
       )}
       {...innerProps}
@@ -534,11 +536,11 @@ export class MenuPortal extends Component<MenuPortalProps, MenuPortalState> {
     // same wrapper element whether fixed or portalled
     const menuWrapper = (
       <div
-        css={getStyles('menuPortal', state)}
         className={cx(
           {
             'menu-portal': true,
           },
+          tw`${() => getStyles('menuPortal', state)}`,
           className
         )}
         {...innerProps}

@@ -1,7 +1,6 @@
 // @flow
-/** @jsx jsx */
-import { type ElementRef } from 'react';
-import { jsx } from '@emotion/react';
+import React, { type ElementRef } from 'react';
+import { tw } from 'twind';
 import AutosizeInput from 'react-input-autosize';
 
 import type { PropsWithStyles, ClassNamesState } from '../types';
@@ -23,9 +22,9 @@ export const inputCSS = ({
   isDisabled,
   theme: { spacing, colors },
 }: InputProps) => ({
-  margin: spacing.baseUnit / 2,
-  paddingBottom: spacing.baseUnit / 2,
-  paddingTop: spacing.baseUnit / 2,
+  margin: `calc(${spacing.baseUnit} / 2)`,
+  paddingBottom: `calc(${spacing.baseUnit} / 2)`,
+  paddingTop: `calc(${spacing.baseUnit} / 2)`,
   visibility: isDisabled ? 'hidden' : 'visible',
   color: colors.neutral80,
 });
@@ -51,7 +50,7 @@ const Input = ({
   selectProps,
   ...props
 }: InputProps) => (
-  <div css={getStyles('input', { theme, ...props })}>
+  <div className={tw`${() => getStyles('input', { theme, ...props })}`}>
     <AutosizeInput
       className={cx({ input: true }, className)}
       inputRef={innerRef}
